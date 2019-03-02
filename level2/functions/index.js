@@ -24,8 +24,8 @@ const app = dialogflow({debug: true});
 
 // Handle the Dialogflow intent named 'favorite color'.
 // The intent collects a parameter named 'color'.
-app.intent('favorite color', (conv, {color}) => {
-    const luckyNumber = color.length;
+app.intent('favorite color', (conv, {favColor}) => {
+    const luckyNumber = favColor.length;
     // Respond with the user's lucky number and end the conversation.
     conv.close('Your lucky number is ' + luckyNumber);
 });
