@@ -28,14 +28,19 @@ const app = dialogflow({debug: true});
 
 // Handle the Dialogflow intent named 'favorite color'.
 // The intent collects a parameter named 'favColor'.
-app.intent('favorite color', (conv, {favColor}) => {
-    const luckyNumber = favColor.length;
+app.intent('favorite color', (conv, {color}) => {
+    const luckyNumber = color.length;
+    const audioSound = 'https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg';
     if (conv.data.userName) {
-      conv.close(`${conv.data.userName}, your lucky number is ${luckyNumber}.`);
+      // If we collected user name previously, address them by name and use SSML
+      // to embed an audio snippet in the response.
+      conv.close(`<speak>${conv.data.userName}, your lucky number is ` +
+        `${luckyNumber}.<audio src="${audioSound}"></audio></speak>`);
     } else {
-      conv.close(`Your lucky number is ${luckyNumber}.`);
+      conv.close(`<speak>Your lucky number is ${luckyNumber}.` +
+        `<audio src="${audioSound}"></audio></speak>`);
     }
-  });
+   });
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
